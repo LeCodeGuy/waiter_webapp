@@ -1,6 +1,10 @@
 export default function queries(db){
     
-    return{
+    async function resetData(){
 
+    }
+    
+    return{
+        resetData,
     }
 }
