@@ -46,4 +46,4 @@ jobs:
       run:
         npm test
       env:
-        CONNECTION_STRING: postgres://couserder:P@ssword123~@localhost:5432/waiterapp
+        CONNECTION_STRING: postgres://user:P@ssword123~@localhost:5432/waiterapp
