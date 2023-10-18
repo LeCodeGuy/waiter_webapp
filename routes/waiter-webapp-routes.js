@@ -1,13 +1,33 @@
+// import { as } from "pg-promise";
+
 export default function waiterApp(query){
     async function pageLoad(req,res){
+        let weekData = await query.allDays();
+        const user= req.params.username
 
-        res.render('home',{
+        res.render('waiters',{
             // variables to be passed to handlebars
-            tabTitle:'Home - WaiterApp',
+            tabTitle:'Waiter Scheduling',
+            user,
+            weekData,
+        })
+    }
+
+    async function addSchedule(req, res){
+        let selectedDays = req.body;
+        let weekData = await query.allDays();
+        const userName = req.params.username;
+
+        //console.log(selectedDays);
+        res.render('waiters',{
+            tabTitle:'Waiter Scheduling',
+            user:userName,
+            weekData,
         })
     }
 
     return{
         pageLoad,
+        addSchedule,
     }
 }

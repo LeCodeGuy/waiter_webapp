@@ -8,9 +8,9 @@ import flash from 'express-flash';
 import session from 'express-session';
 
 // Import modules
-import registrationNumberService from './services/registration_numbers_services.js';
-import db from './routes/database_connection.js'
-import registrationNumberRoutes from './routes/registration_numbers_routes.js'
+import waiterService from './services/waiter-webapp-services.js';
+import db from './routes/database-connection.js'
+import waiterRoutes from './routes/waiter-webapp-routes.js'
 
 // Setup a simple ExpressJS server
 const app = express();
@@ -45,11 +45,12 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // Instantiate the app
-let services = registrationNumberService(db);
-let routes = registrationNumberRoutes(services);
+let services = waiterService(db);
+let routes = waiterRoutes(services);
 
 // Routes
-app.get('/', routes.pageLoad);
+app.get('/waiters/:username', routes.pageLoad);
+app.post('/waiters/:username', routes.addSchedule)
 
 // Set PORT variable
 let port = process.env.PORT || 3000;
