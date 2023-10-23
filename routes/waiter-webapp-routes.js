@@ -19,14 +19,18 @@ export default function waiterApp(query){
         res.render('register',{
             tabTitle:'Registration',
             pageTitle: 'Create a profile',
+            username: req.body.userName,
         })
     }
 
     async function registration(req,res){
-        const userName = req.params.userName;
-        console.log(userName);
+        const userName = req.params.username;
+        const pass= req.params.pass;
+        const pass2 = req.params.pass2;
+
+        console.log(userName + pass + pass2);
         res.render('register',{
-             tabTitle:'Registration',
+            tabTitle:'Registration',
             pageTitle: 'Create a profile',
         })
     }
