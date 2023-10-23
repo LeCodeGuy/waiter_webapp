@@ -5,18 +5,37 @@
 
 body{
     font-family: 'Nunito',sans-serif;
-    color:#847577;
+    color:#003049;
     background-color: #FBFBF2;
-    /* Source https://unsplash.com/photos/TD4DBagg2wE */
-    /* background-image: url(../images/coffeeBeans.jpg);
-    background-repeat: repeat; */
+    
 }
+body::after {
+    content: "";
+    background: url(../images/coffeeBeans.jpg) repeat; /* Source https://unsplash.com/photos/TD4DBagg2wE */
+    opacity: 0.7;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+  }
 
+/* div.container{
+    
+    background-image: url(../images/coffeeBeans.jpg);
+    background-repeat: repeat;
+    opacity: 0.5;
+} */
 .login{
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 10px;
+    color: #003049;
+    background:#cbdfbd;
+    /* width: calc(100vw - 20px);
+    margin-left: calc(-50vw + 50% + 10px); */
 }
 
 .icon {
@@ -30,11 +49,10 @@ body{
   justify-content: center;
   align-items: center;
   /* style the form */
-  background-color: #E5E6E4;
+  background-color: #cbdfbd;
   border-radius: 5px;
   width: 70%;
   margin: 5% auto;
-  opacity:1 !important;
 }
 
 .mainHeading {
@@ -50,13 +68,24 @@ form{
 }
 
 .btn {
-  background-color: #CFD2CD;
-  border: 0px solid #CFD2CD;
+  background-color: #f19c79;
+  border: 0px solid #f19c79;
   border-radius: 5px;
   cursor: pointer;
-  color:#847577;
+  color:#003049;
   font-weight: bold;
   margin: 10px 5px;
   padding:5px;
   width:110px;
+}
+/* Registration Form Styling */
+.regForm{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.regForm input{
+    margin:5px;
 }

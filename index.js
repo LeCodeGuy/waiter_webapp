@@ -49,6 +49,9 @@ let services = waiterService(db);
 let routes = waiterRoutes(services);
 
 // Routes
+app.get('/',routes.home);
+app.get('/register',routes.regPageLoad);
+app.post('/register/:username:pass:pass2',routes.registration);
 app.get('/waiters/:username', routes.pageLoad);
 app.post('/waiters/:username', routes.addSchedule)
 

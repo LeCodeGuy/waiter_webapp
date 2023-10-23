@@ -1,7 +1,38 @@
 // import { as } from "pg-promise";
 
 export default function waiterApp(query){
+    let loggedIn
+    async function home(req,res){
+        loggedIn = false;
+        res.render('home',{
+            tabTitle:'Home - Scheduling App',
+            pageTitle:'Waiter scheduling app',
+            loggedIn,
+        })
+    }
+    
+    async function regPageLoad(req, res){
+        //const userName = req.params.userName;
+        //const pass = req.params.
+
+        //res.redirect('/');
+        res.render('register',{
+            tabTitle:'Registration',
+            pageTitle: 'Create a profile',
+        })
+    }
+
+    async function registration(req,res){
+        const userName = req.params.userName;
+        console.log(userName);
+        res.render('register',{
+             tabTitle:'Registration',
+            pageTitle: 'Create a profile',
+        })
+    }
+
     async function pageLoad(req,res){
+        loggedIn = true 
         let weekData = await query.allDays();
         const user= req.params.username
 
@@ -10,23 +41,33 @@ export default function waiterApp(query){
             tabTitle:'Waiter Scheduling',
             user,
             weekData,
+            loggedIn,
         })
     }
 
     async function addSchedule(req, res){
-        let selectedDays = req.body;
+        loggedIn = true
+        let selectedDays = req.body.day;
         let weekData = await query.allDays();
         const userName = req.params.username;
+
+        //await query.addUser(userName,'P@ssword');
+        //await query.getDayRecords(selectedDays);
+
 
         //console.log(selectedDays);
         res.render('waiters',{
             tabTitle:'Waiter Scheduling',
             user:userName,
             weekData,
+            loggedIn,
         })
     }
 
     return{
+        home,
+        regPageLoad,
+        registration,
         pageLoad,
         addSchedule,
     }

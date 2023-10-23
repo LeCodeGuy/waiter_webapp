@@ -35,6 +35,23 @@ export default function queries(db){
         })
     }
 
+    async function getDayRecords(days){
+        let daysArray = [];
+        console.log(days);
+        for(let i=0;days.length >0; i++){
+            let day = days[i];
+            let record = await db.any("SELECT * FROM Days WHERE day = $1",[day])
+            console.log(day);
+            console.log(record[0]);
+
+            do{
+                daysArray.push(record[0]);
+            }while(record[0]!= undefined)
+        }
+        //console.log(daysArray);
+        return daysArray
+    }
+
     async function getSchedule(userName){
         const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
 
@@ -45,6 +62,7 @@ export default function queries(db){
         allDays,
         addUser,
         allUsers,
+        getDayRecords,
         addSchedule,
         getSchedule,
         resetData,
