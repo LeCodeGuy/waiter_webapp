@@ -27,7 +27,7 @@ describe("Waiter Web App testing", function(){
 
         let result = await query.allUsers();
 
-        assert.equal(3, result.length);
+        assert.equal(4, result.length);
     });
 
     it("should return data for all days", async function (){
@@ -48,7 +48,7 @@ describe("Waiter Web App testing", function(){
         await query.addUser('Devan','P@ssword');
         await query.addSchedule('Devan',[{ id: 4, day: 'Thursday' }]);
 
-        let result = await query.getSchedule('Devan');
+        let result = await query.getWaiterSchedule('Devan');
         
         assert.equal(1, result.length);
     });
@@ -57,7 +57,7 @@ describe("Waiter Web App testing", function(){
         await query.addUser('Devan','P@ssword');
         await query.addSchedule('Devan',[{ id: 1, day: 'Monday' },{ id: 2, day: 'Tuesday' },{ id: 3, day: 'Wednesday' }]);
 
-        let result = await query.getSchedule('Devan');
+        let result = await query.getWaiterSchedule('Devan');
         
         assert.equal(3, result.length);
     });
