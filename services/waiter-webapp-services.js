@@ -3,10 +3,15 @@ import bcrypt from "bcrypt";
 export default function queries(db){
     
     async function resetData(){
-        // Clear waiters table
-        // await db.none("TRUNCATE TABLE Users RESTART IDENTITY CASCADE");
         // Clear schedule table
         await db.none("TRUNCATE TABLE Schedule RESTART IDENTITY CASCADE");
+    }
+
+    async function resetUsers(){
+        // Clear waiters table
+        await db.none("TRUNCATE TABLE Users RESTART IDENTITY CASCADE");
+        // add default manager record
+        await db.none("INSERT INTO Users (User_Role, User_Name, User_Password) VALUES ('Admin','Manager','P@ssword123')");
     }
 
     async function checkUser(userName){
@@ -72,5 +77,6 @@ export default function queries(db){
         addSchedule,
         getWaiterSchedule,
         resetData,
+        resetUsers,
     }
 }

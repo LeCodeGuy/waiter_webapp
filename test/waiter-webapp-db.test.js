@@ -9,6 +9,7 @@ describe("Waiter Web App testing", function(){
     
     this.beforeEach(async function (){
         await query.resetData();
+        await query.resetUsers();
     });
 
     it("should allow adding a waiter", async function (){
@@ -16,7 +17,7 @@ describe("Waiter Web App testing", function(){
         
         let result = await query.allUsers();
         
-        assert.equal(1,result.length);
+        assert.equal(2,result.length);
     });
 
     it("should allow adding multiple waiters", async function (){
