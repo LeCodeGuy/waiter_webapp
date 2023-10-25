@@ -61,6 +61,13 @@ body::after {
   text-align: center;
 }
 
+.homeBtns{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 form{
     width: 100%;
     padding: 10px 0px;
@@ -78,6 +85,35 @@ form{
   padding:5px;
   width:110px;
 }
+.clearStyle{
+  all: unset;
+}
+/* Password Examples */
+.passExample{
+  text-align: justify;
+}
+/* *Flash message styling */
+.msgError {
+  color:#cc0f35;
+  font-weight:bold;
+  border: solid 2px #fbcad3;
+  background: #fbcad3;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-align: center;
+  width: 90%;
+}
+.msgSuccess {
+color:#228b22;
+font-weight:bold;
+border: solid 2px #bce3bc;
+background: #bce3bc;
+margin: 0 auto;
+border-radius: 5px;
+text-align: center;
+width: 90%;
+}
+
 /* Registration Form Styling */
 .regForm{
     display:flex;

@@ -1,0 +1,28 @@
+<div class="bodyContent">
+    <h1 class="mainHeading">{{pageTitle}}</h1>
+    <form action="/login" method="post" class="regForm">
+        <div class="roleSelect">
+            <label for="userType">Select role: </label>
+            <select name="userType" id="userType">
+                <option value="Admin">Admin</option>
+                <option value="Waiter">Waiter</option>
+            </select>
+        </div>        
+        <input type="text" name="username" placeholder="Username"/>
+        <input type="password" id="password" name="password" placeholder="Password"/>
+        {{#if messages.loginError}}
+        <p class="message msgError">{{messages.loginError}}</p>
+        {{/if}}
+        <div class="regFormBtns">
+            <button type="submit" class="btn">Login</button>
+            <button type="button" class="btn loginBack">Back</button>
+        </div>
+    </form>
+</div>
+
+{{!-- <form action="/adminNavigate" method="get">
+            <button type="submit" class="btn btnAdmin">Admin</button>
+        </form>
+        <form action="/login" method="get">
+            <button type="submit" class="btn btnWaiter">Waiter</button>
+        </form> --}}

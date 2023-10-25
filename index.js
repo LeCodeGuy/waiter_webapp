@@ -48,12 +48,28 @@ app.use(bodyParser.json());
 let services = waiterService(db);
 let routes = waiterRoutes(services);
 
-// Routes
+// *Routes
+// Landing page
 app.get('/',routes.home);
-app.get('/register',routes.regPageLoad);
-app.post('/register/:username:pass:pass2',routes.registration);
+
+// Login page
+app.get("/login",routes.loginClicked);
+app.post("/login",routes.login);
+
+// Registration page
+app.get('/register',routes.regClicked);
+app.post('/register',routes.registration);
+
+// Waiters page
 app.get('/waiters/:username', routes.pageLoad);
-app.post('/waiters/:username', routes.addSchedule)
+app.post('/waiters/:username', routes.addSchedule);
+
+// Management Page
+app.get('/days',routes.getSchedule);
+app.post('/days',routes.updateSchedule);
+
+// log out route
+app.post('/logout',routes.logout);
 
 // Set PORT variable
 let port = process.env.PORT || 3000;

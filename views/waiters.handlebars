@@ -2,18 +2,18 @@
     <h1 class="mainHeading">Waiter Scheduling</h1>
     <form action="/waiters/{{user}}" method="post">
         {{#if messages.error}}
-        {{!-- <div class="message msgError">{{messages.error}}</div> --}}
+            <div class="message msgError">{{messages.error}}</div>
         {{/if}}
-        <div class="message msgError">A minimum of 3 days must be selected</div>
-
+        
         {{#each weekData}}
             <input type="checkbox" id="{{this.id}}" name="day" value="{{this.day}}">
             <label for="{{this.id}}">{{this.day}}</label>
         {{/each}}
 
         <input type="submit" value="Schedule" class="btn schedule">
+        {{log waiterSchedule}}
+        {{#if waiterSchedule}}
+            <div class="message msgSuccess">Schedule updated successfully!</div>
+        {{/if}}
     </form>
-    <section class="scheduledDays">
-        <h2>Scheduled Days</h2>
-    </section>
 </div>

@@ -4,9 +4,13 @@ export default function queries(db){
     
     async function resetData(){
         // Clear waiters table
-        await db.none("TRUNCATE TABLE Users RESTART IDENTITY CASCADE");
+        // await db.none("TRUNCATE TABLE Users RESTART IDENTITY CASCADE");
         // Clear schedule table
         await db.none("TRUNCATE TABLE Schedule RESTART IDENTITY CASCADE");
+    }
+
+    async function checkUser(userName){
+        return await db.any("SELECT * FROM Users WHERE User_Name =$1",userName);
     }
 
     async function addUser(userName,password){
@@ -15,7 +19,7 @@ export default function queries(db){
         const hashedPassword = await bcrypt.hash(password,10);
         
         // Add the record
-        await db.none("INSERT INTO Users(User_Name, User_Password) VALUES($1, $2)", [userName, hashedPassword]);
+        await db.none("INSERT INTO Users(User_Role, User_Name, User_Password) VALUES($1, $2, $3)", ['Waiter',userName, hashedPassword]);
     }
     
     async function allUsers(){
@@ -36,23 +40,24 @@ export default function queries(db){
     }
 
     async function getDayRecords(days){
-        let daysArray = [];
-        console.log(days);
-        for(let i=0;days.length >0; i++){
+        let daysArray=[];
+        //console.log(days);
+        for(let i=0;i < days.length; i++){
             let day = days[i];
-            let record = await db.any("SELECT * FROM Days WHERE day = $1",[day])
-            console.log(day);
-            console.log(record[0]);
-
-            do{
-                daysArray.push(record[0]);
-            }while(record[0]!= undefined)
+            let record = await db.any("SELECT * FROM Days WHERE day = $1",day)
+            //console.log('getDayRecords logging day: '+day);
+            //console.log(record[0]);
+            daysArray.push(record[0]);
+            //daysArray.day += await db.any("SELECT * FROM Days WHERE day = $1",day);
+            // do{
+            //     daysArray.push(record[0]);
+            // }while(record[0]!= undefined)
         }
         //console.log(daysArray);
         return daysArray
     }
 
-    async function getSchedule(userName){
+    async function getWaiterSchedule(userName){
         const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
 
         return await db.any("SELECT * FROM Schedule WHERE FK_Waiter_ID = $1",userRecord.id);
@@ -60,11 +65,12 @@ export default function queries(db){
 
     return{
         allDays,
+        checkUser,
         addUser,
         allUsers,
         getDayRecords,
         addSchedule,
-        getSchedule,
+        getWaiterSchedule,
         resetData,
     }
 }

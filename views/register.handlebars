@@ -1,14 +1,23 @@
 <div class="bodyContent">
     <h1 class="mainHeading">{{pageTitle}}</h1>
-    <form action="/register/:username:pass:pass2" method="post">
+    <form action="/register" method="post">
         <div class="regForm">
+            <ul class="passExample"><u>Passwords must:</u>
+                <li>be 6 or more characters in length</li>
+                <li>include lower and upper case alphabetical characters</li>
+                <li>include 1 numeric character</li>
+                <li>include 1 special character</li>
+            </ul>
             <input type="text" name="userName" id="txtUserName" placeholder="Name">
             <input type="password" name="userPassword" id="txtPass" placeholder="Password">
             <input type="password" name="passwordConfirm" id="txtConfirmPass" placeholder="Password Confirmation">
-        </div>        
-        <div class="regFormBtns">
-            <button type="submit" class="btn regBtnRegister">Register</button>
-            <button type="button" class="btn regBtnBack">Back</button>
+            {{#if messages.regError}}
+            <p class="message msgError">{{messages.regError}}</p>
+            {{/if}}
+            <div class="regFormBtns">
+                <button type="submit" class="btn regBtnRegister">Register</button>
+                <button type="button" class="btn regBack">Back</button>
+            </div>
         </div>
     </form>
 </div>
