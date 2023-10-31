@@ -74,6 +74,8 @@ app.post('/waiters/:username', routes.scheduling);
 app.get('/days',routes.getSchedule);
 app.post('/days',routes.updateSchedule);
 
+// Reset route
+app.get('/reset',routes.reset);
 // log out route
 app.post('/logout',routes.logout);
 

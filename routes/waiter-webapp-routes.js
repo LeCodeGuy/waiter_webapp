@@ -231,6 +231,11 @@ export default function waiterApp(query){
     async function updateSchedule(req,res){
 
     }    
+    async function reset(req, res){
+        await query.resetData();
+        req.flash('resetSuccess','The schedule was reset!')
+        res.redirect('/days');
+    }
 
     function logout(reg, res){
         loggedIn = false;
@@ -247,6 +252,7 @@ export default function waiterApp(query){
         scheduling,
         getSchedule,
         updateSchedule,
+        reset,
         logout,
     }
 }

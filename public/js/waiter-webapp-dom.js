@@ -21,6 +21,50 @@ if(logBackBtn){
 if(logoutBtn){
     logoutBtn.addEventListener('click',function(){navigate('logout')});
 }
+// Get modal DOM Elements
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const openModalBtn = document.querySelector(".btn-open");
+const closeModalBtn = document.querySelector(".btn-close");
+const proceedBtn = document.querySelector('.btnProceed');
+
+// Event listener to the open modal when the reset Count button is clicked
+openModalBtn.addEventListener("click", openModal);
+// Event listener for the proceed button on the modal
+proceedBtn.addEventListener("click", redirect);
+// Event Listener to close the modal when the close button or overlay is clicked
+closeModalBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
+
+//Event Listener to close modal when the Esc key is pressed
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
+ 
+  // Open modal function
+  function openModal(){
+     // removes the hidden class to show the modal and overlay
+     modal.classList.remove("hidden");
+     overlay.classList.remove("hidden");
+  }
+  
+  // Close modal function
+  function closeModal(){
+     // adds the hidden class to show the modal and overlay
+     modal.classList.add("hidden");
+     overlay.classList.add("hidden");
+  }
+  
+  // show an alert before resetting the app.
+  function redirect(){
+    closeModal();
+     
+    if (modal.classList.contains("hidden")) {
+       window.location.href='/reset';
+    }
+  }
 
 function navigate(action){
     console.log(action);
