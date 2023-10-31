@@ -1,8 +1,5 @@
 <div class="bodyContent">
     <h1 class="mainHeading">Manage waiter schedules</h1>
-    {{#if messages.resetSuccess}}
-    <div class="message msgSuccess">{{messages.resetSuccess}}</div>
-    {{/if}}
     <section class="info">
         
         <div class="legend">
@@ -29,7 +26,10 @@
             </div>
         </div>
     </section>      
-    <h2>This Week's Schedule</h2>    
+    <h2>This Week's Schedule</h2> 
+    {{#if messages.resetSuccess}}
+    <div class="message msgSuccess">{{messages.resetSuccess}}</div>
+    {{/if}}   
     <div class="table schedule">
         <div class="tableRow">
             {{#each weekData}}
@@ -40,26 +40,26 @@
             {{#each waiterData}}
             <div class="tableCell"></div>
             {{/each}}
-            <div class="scheduleCell">
+            {{!-- <div class="tableCell">
                 <div>Devan</div>
                 <div>Sam</div>
                 <div>Beth</div>
-            </div>
+            </div> --}}
         </div>
     </div>
     {{!-- Modal Dialog START--}}
-        <div class="overlay hidden">
-            <section class="modal hidden">
-                <div>
-                    <h3>Warning!</h3>
-                    <p>You are about to reset the app!</p>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btnProceed">Proceed</button>
-                    <button type="button" class="btn btn-close">Close</button>
-                </div>
-            </section>
-        </div>
-        {{!-- Modal Dialog END --}}
-        <input type="button" value="Reset" class="btn btn-open">
+    <div class="overlay hidden">
+        <section class="modal hidden">
+            <div>
+                <h3>Warning!</h3>
+                <p>You are about to reset the app!</p>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btnProceed">Proceed</button>
+                <button type="button" class="btn btn-close">Close</button>
+            </div>
+        </section>
+    </div>
+    {{!-- Modal Dialog END --}}
+    <input type="button" value="Reset" class="btn btn-open">
 </div>

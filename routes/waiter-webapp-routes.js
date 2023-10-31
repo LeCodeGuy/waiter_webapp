@@ -156,11 +156,10 @@ export default function waiterApp(query){
     }
 
     async function pageLoad(req,res){
-        console.log('log in status'+loggedIn);
         let weekData = await query.allDays();
         const user= req.params.username;
         const waiterSchedule = await query.getWaiterSchedule(user);
-        console.log('waiterSchedule: '+waiterSchedule);
+        
         if(loggedIn == true){
             if(waiterSchedule == 'No user found'){
                 // redirect to registration screen if user account does not exist
@@ -187,29 +186,41 @@ export default function waiterApp(query){
         let selectedDays = req.body.day;
         const userName = req.params.username;
         const currentSchedule = await query.getWaiterSchedule(userName);
-        // console.log(currentSchedule.length);
-        console.log('Scheduling selected days');
-        console.log(selectedDays.length);
-        // TODO Get all records for the current user
-        // TODO IF the length is 0 ,add the schedule records else remove the records and then add the updated schedule
-        if(selectedDays.length < 3 || selectedDays.length > 5){
-            req.flash('scheduleError','Please schedule between 3 and 5 days ')
+        
+        // fix to cater for when only 1 day is selected.
+        // without the fix the req.body.day returns a string value for a single selection
+        if(typeof selectedDays === 'string'){
+            // convert the string to an array for the length check to work lower down
+            selectedDays = [selectedDays];
+        }
+        
+        if(selectedDays.length >= 3 && selectedDays.length <= 5){
+            let dayRecordsSelection = await query.getDayRecords(selectedDays);
+            // If no records exist
+            if(currentSchedule.length == 0){
+                // add current selection to the schedule
+                await query.addSchedule(userName,dayRecordsSelection);
+                req.flash('success', 'Schedule updated successfully!');
+            }
+            // If scheduled records exist
+            else{
+                //remove existing records
+                await query.removeSchedule(userName);
+
+                // add current selection to the schedule
+                await query.addSchedule(userName,dayRecordsSelection);
+                req.flash('success', 'Schedule updated successfully!');
+            }
+
             res.redirect('/waiters/'+userName);
         }
         else{
-            req.flash('scheduleSuccess','Do next check');
+            req.flash('error','Please schedule between 3 and 5 days');
             res.redirect('/waiters/'+userName);
-        }
-
-        //let dayRecordsSelection = await query.getDayRecords(selectedDays);
-        // await query.addSchedule(userName,dayRecordsSelection);
-        //req.flash('scheduled', 'Schedule updated successfully!');
-        
-        
+        }        
     }
 
     async function getSchedule(req, res){
-        console.log('log in status'+loggedIn);
         if(loggedIn == true){
             let weekData = await query.allDays();
             let staff = await query.allUsers();

@@ -37,11 +37,16 @@ export default function queries(db){
 
     async function addSchedule(userName,days){
         const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
-
+        
         days.forEach(day => {
-            //console.log(day.id);
-            db.none("INSERT INTO Schedule (FK_Waiter_ID, FK_Day_ID) VALUES ($1,$2)",[userRecord.id,day.id]);
+            db.none("INSERT INTO Schedule (FK_Waiter_ID, FK_Day_ID) VALUES ($1,$2)",[userRecord.id,day.id]); 
         })
+    }
+
+    async function removeSchedule(userName){
+        const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
+
+        await db.none("DELETE FROM Schedule WHERE FK_Waiter_ID = $1",userRecord.id);
     }
 
     async function getDayRecords(days){
@@ -79,6 +84,7 @@ export default function queries(db){
         allUsers,
         getDayRecords,
         addSchedule,
+        removeSchedule,
         getWaiterSchedule,
         resetData,
         resetUsers,
