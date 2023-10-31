@@ -6,6 +6,8 @@ import exphbs from 'express-handlebars';
 import bodyParser from 'body-parser';
 import flash from 'express-flash';
 import session from 'express-session';
+// import helmet from 'helmet';
+// import rateLimit from 'express-rate-limit';
 
 // Import modules
 import waiterService from './services/waiter-webapp-services.js';
@@ -14,6 +16,9 @@ import waiterRoutes from './routes/waiter-webapp-routes.js'
 
 // Setup a simple ExpressJS server
 const app = express();
+
+// Use Helmet!
+//app.use(helmet());
 
 // Initialise session middleware - flash-express depends on this don't let it down
 app.use(session({
@@ -34,6 +39,7 @@ const handlebarSetup = exphbs.engine({
     viewPath: './views',
     layoutsDir: './views/layouts'
 })
+
 // setup handlebars
 app.engine('handlebars', handlebarSetup);
 // set handlebars as the view engine
@@ -62,7 +68,7 @@ app.post('/register',routes.registration);
 
 // Waiters page
 app.get('/waiters/:username', routes.pageLoad);
-app.post('/waiters/:username', routes.addSchedule);
+app.post('/waiters/:username', routes.scheduling);
 
 // Management Page
 app.get('/days',routes.getSchedule);

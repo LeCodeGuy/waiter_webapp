@@ -1,3 +1,47 @@
 <div class="bodyContent">
     <h1 class="mainHeading">Manage waiter schedules</h1>
+    <section class="info">
+        
+        <div class="legend">
+            <h2>Legend</h2>
+            <div class="legendItem noWaiters">No waiters</div>
+            <div class="legendItem someWaiters">Less than 3 waiters for the day</div>
+            <div class="legendItem enoughWaiters">3 waiters for the day</div>
+            <div class="legendItem tooManyWaiters">More than 3 waiters for the day</div>
+        </div>
+
+        <div class="employees ">
+            <h2>My Employees</h2>
+            <div class="table staff">
+                <div class="tableRow">
+                    <div class="tableCell heading">Role</div>
+                    <div class="tableCell heading">Name</div>
+                </div>
+                {{#each staff}}
+                <div class="tableRow">
+                    <div class="tableCell">{{this.user_role}}</div>
+                    <div class="tableCell">{{this.user_name}}</div> 
+                </div>
+                {{/each}}          
+            </div>
+        </div>
+    </section>      
+    <h2>This Week's Schedule</h2>    
+    <div class="table schedule">
+        <div class="tableRow">
+            {{#each weekData}}
+            <div class="tableCell heading">{{this.day}}</div>
+            {{/each}}
+        </div>
+        <div class="tableRow">
+            {{#each waiterData}}
+            <div class="tableCell"></div>
+            {{/each}}
+            <div class="scheduleCell">
+                <div>Devan</div>
+                <div>Sam</div>
+                <div>Beth</div>
+            </div>
+        </div>
+    </div>
 </div>

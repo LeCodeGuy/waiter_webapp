@@ -1,6 +1,6 @@
 CREATE TABLE Users (ID serial not null primary key,User_Role text, User_Name text, User_Password text);
 CREATE TABLE Days (ID serial not null primary key, Day text);
-CREATE TABLE Schedule (ID serial not null primary key, Weekday text, FK_Waiter_ID int,FK_Day_ID int);
+CREATE TABLE Schedule (ID serial not null primary key, FK_Waiter_ID int,FK_Day_ID int);
 
 --* DATATYPES
 /*

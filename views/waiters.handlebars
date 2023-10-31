@@ -11,9 +11,8 @@
         {{/each}}
 
         <input type="submit" value="Schedule" class="btn schedule">
-        {{log waiterSchedule}}
-        {{#if waiterSchedule}}
-            <div class="message msgSuccess">Schedule updated successfully!</div>
+        {{#if messages.scheduled}}
+            <div class="message msgSuccess">{{messages.scheduled}}</div>
         {{/if}}
     </form>
 </div>

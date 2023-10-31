@@ -40,7 +40,7 @@ export default function queries(db){
 
         days.forEach(day => {
             //console.log(day.id);
-            db.none("INSERT INTO Schedule (Weekday,FK_Waiter_ID, FK_Day_ID) VALUES ($1,$2,$3)",[day.day,userRecord.id,day.id]);
+            db.none("INSERT INTO Schedule (FK_Waiter_ID, FK_Day_ID) VALUES ($1,$2)",[userRecord.id,day.id]);
         })
     }
 
@@ -64,8 +64,12 @@ export default function queries(db){
 
     async function getWaiterSchedule(userName){
         const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
-
-        return await db.any("SELECT * FROM Schedule WHERE FK_Waiter_ID = $1",userRecord.id);
+        if(userRecord){
+            return await db.any("SELECT * FROM Schedule WHERE FK_Waiter_ID = $1",userRecord.id);
+        }
+        else{
+            return 'No user found';
+        }
     }
 
     return{

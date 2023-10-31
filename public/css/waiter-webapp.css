@@ -88,9 +88,70 @@ form{
 .clearStyle{
   all: unset;
 }
+
 /* Password Examples */
 .passExample{
   text-align: justify;
+}
+
+/* *Manager view styling */
+.table{
+  display: table;
+  margin: 0 auto;
+}
+
+.tableRow{
+  display: table-row;
+}
+
+.tableCell {
+  display: table-cell;
+  border: 1px solid #003049;
+  padding:10px;
+  text-align: center;
+  width: 10em;
+}
+.heading,.noWaiters{
+  font-weight: bold;
+}
+.info{
+  display:flex;
+}
+/* .left-align {
+  width:50%;
+  text-align: left;
+}
+
+.right-align{
+  width:50%;
+  text-align: right;
+} */
+
+.legend{
+  /* display: flex;
+  align-items: center;
+  flex-direction: row; */
+  margin: 10px;
+}
+.legendItem{
+  /* margin:5px; */
+  padding:5px;
+  font-weight: bold;
+  /* border:1px solid #003049; */
+}
+.someWaiters{
+ color:#ff7601;
+ background:#ffc08a;
+}
+
+.enoughWaiters{
+  color:#228b22;
+  background: #a3f3a3;
+}
+
+.tooManyWaiters{
+  color:#cc0f35;
+  background: #fbcad3;
 }
 /* *Flash message styling */
 .msgError {
