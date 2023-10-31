@@ -38,9 +38,9 @@ export default function queries(db){
     async function addSchedule(userName,days){
         const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
         
-        days.forEach(day => {
-            db.none("INSERT INTO Schedule (FK_Waiter_ID, FK_Day_ID) VALUES ($1,$2)",[userRecord.id,day.id]); 
-        })
+        for (let day of days) {
+            await db.none("INSERT INTO Schedule (FK_Waiter_ID, FK_Day_ID) VALUES ($1,$2)",[userRecord.id,day.id]);
+        }
     }
 
     async function removeSchedule(userName){

@@ -4,6 +4,7 @@ export default function waiterApp(query){
     let loggedIn
     const regexVal = /^[A-Za-z|\s|-]+$/;
     let passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    let daysSelected
 
     //Helper functions
     function titleCase(str) {
@@ -110,35 +111,43 @@ export default function waiterApp(query){
                 // Converts the username to title case
                 user = titleCase(user);
                 
-                if(pass){
-                    // Get user record
-                    const userRecord = await query.checkUser(user);
+                // Get user record
+                const userRecord = await query.checkUser(user);
+                
+                if(userRecord[0].user_role == role){
+                    if(pass){                    
                     
-                    // Compare the hashed password with the password entered by the user
-                    const isPasswordMatch = bcrypt.compareSync(pass, userRecord[0].user_password);
+                        // Compare the hashed password with the password entered by the user
+                        const isPasswordMatch = bcrypt.compareSync(pass, userRecord[0].user_password);
+        
+                        if (isPasswordMatch || pass==userRecord[0].user_password) {
+                            // Passwords match
+                            //console.log("Passwords match. User authentication successful.");
+                            
     
-                    if (isPasswordMatch || pass==userRecord[0].user_password) {
-                        // Passwords match
-                        //console.log("Passwords match. User authentication successful.");
-                        
-
-                        if(role == 'Waiter'){
-                            loggedIn = true;
-                            res.redirect('/waiters/'+user);
+                            if(role == 'Waiter' && userRecord[0].user_role == role){
+                                loggedIn = true;
+                                res.redirect('/waiters/'+user);
+                            }
+                            else if(role == 'Admin'){
+                                loggedIn = true;
+                                res.redirect('/days');
+                            }
+                        } else {
+                            // Passwords do not match
+                            req.flash('loginError', 'The password does not match.');    
+                            res.redirect('/login');
                         }
-                        else if(role == 'Admin'){
-                            loggedIn = true;
-                            res.redirect('/days');
-                        }
-                    } else {
-                        // Passwords do not match
-                        req.flash('loginError', 'The password does not match.');    
+                    }
+                    else{
+                        //No password provided
+                        req.flash('loginError', 'Please enter your password');
                         res.redirect('/login');
                     }
                 }
                 else{
-                    //No password provided
-                    req.flash('loginError', 'Please enter your password');
+                    // Roles do not match
+                    req.flash('loginError', 'Invalid user role, please select a different role');    
                     res.redirect('/login');
                 }
             }
@@ -156,6 +165,7 @@ export default function waiterApp(query){
     }
 
     async function pageLoad(req,res){
+        loggedIn = true;
         let weekData = await query.allDays();
         const user= req.params.username;
         const waiterSchedule = await query.getWaiterSchedule(user);
@@ -173,6 +183,7 @@ export default function waiterApp(query){
                     weekData,
                     waiterSchedule,
                     loggedIn,
+                    daysSelected,
                 })
             }
         }
@@ -211,7 +222,7 @@ export default function waiterApp(query){
                 await query.addSchedule(userName,dayRecordsSelection);
                 req.flash('success', 'Schedule updated successfully!');
             }
-
+            daysSelected = selectedDays;
             res.redirect('/waiters/'+userName);
         }
         else{
@@ -221,6 +232,8 @@ export default function waiterApp(query){
     }
 
     async function getSchedule(req, res){
+        loggedIn = true;
+
         if(loggedIn == true){
             let weekData = await query.allDays();
             let staff = await query.allUsers();

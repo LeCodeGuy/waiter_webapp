@@ -4,6 +4,17 @@ let regBtn = document.querySelector(".btnRegisterHome") || null;
 let regBackBtn = document.querySelector(".regBack") || null;
 let logBackBtn = document.querySelector(".loginBack") || null;
 let logoutBtn = document.querySelector(".btn-secondary") || null;
+// Modal DOM Elements
+const modal = document.querySelector(".modal") || null;
+const overlay = document.querySelector(".overlay") || null;
+const openModalBtn = document.querySelector(".btn-open") || null;
+const closeModalBtn = document.querySelector(".btn-close") || null;
+const proceedBtn = document.querySelector('.btnProceed') || null;
+
+// waiter page variables
+let daysSelected = document.querySelector('.daysSelected') || null;
+let days = document.getElementsByName('day') || null;//document.querySelectorAll('.regNumsTown');
+// console.log(days);
 
 // *Event listeners
 if(loginBtn){
@@ -21,20 +32,23 @@ if(logBackBtn){
 if(logoutBtn){
     logoutBtn.addEventListener('click',function(){navigate('logout')});
 }
-// Get modal DOM Elements
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const openModalBtn = document.querySelector(".btn-open");
-const closeModalBtn = document.querySelector(".btn-close");
-const proceedBtn = document.querySelector('.btnProceed');
+if(openModalBtn){
+    // Event listener to the open modal when the reset Count button is clicked
+    openModalBtn.addEventListener("click", openModal);
+}
+if(proceedBtn){
+    // Event listener for the proceed button on the modal
+    proceedBtn.addEventListener("click", redirect);
+}
+if(closeModalBtn && overlay){
+    // Event Listener to close the modal when the close button or overlay is clicked
+    closeModalBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", closeModal);
+}
 
-// Event listener to the open modal when the reset Count button is clicked
-openModalBtn.addEventListener("click", openModal);
-// Event listener for the proceed button on the modal
-proceedBtn.addEventListener("click", redirect);
-// Event Listener to close the modal when the close button or overlay is clicked
-closeModalBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
+if(daysSelected){
+    document.addEventListener('DOMContentLoaded',setDaysSelected);
+}
 
 //Event Listener to close modal when the Esc key is pressed
 document.addEventListener("keydown", function (e) {
@@ -89,3 +103,24 @@ setTimeout(() => {
         message.remove();
     });
 }, 3000);
+
+// checks the day checkboxes with the same selection as prior to page refresh
+function setDaysSelected(){
+    let myArr = (daysSelected.innerHTML).split(',');
+    
+    // loop through the day checkboxes
+    for(i = 0; i < days.length; i++){
+        // loop through the previous days selected
+        for(ii = 0; ii < myArr.length;ii++){
+            // if the previous selected day matches the current item in the days loop
+            if(days[i].value === myArr[ii]){
+                // set the checkbox's checked attribute to true
+                days[i].checked=true;
+            }            
+        }
+        
+    }
+
+    // remove the placeholder
+    daysSelected.remove();
+}
