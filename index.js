@@ -33,8 +33,23 @@ app.use(flash());
 // Make public folder available to the app
 app.use(express.static('public'));
 
+// // Define custom helpers
+// const hbs = exphbs.create({
+//     helpers: {
+//         eq: function (v1, v2) {
+//             return v1 === v2;
+//         }
+//     }
+// });
+
 // handlebar engine settings
 const handlebarSetup = exphbs.engine({
+    // Define custom helpers
+    helpers: {
+        eq: function (v1, v2) {
+            return v1 === v2;
+        }
+    },
     partialsDir: './views/partials',
     viewPath: './views',
     layoutsDir: './views/layouts'

@@ -1,7 +1,7 @@
 <div class="bodyContent">
     <h1 class="mainHeading">Waiter Scheduling</h1>
-    {{#if daysSelected}}
-    <div class="daysSelected">{{daysSelected}}</div>
+    {{#if waiterSchedule}}
+    <div class="daysSelected">{{waiterSchedule}}</div>
     {{/if}}
     <form action="/waiters/{{user}}" method="post">
         {{#if messages.error}}

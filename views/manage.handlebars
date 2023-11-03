@@ -37,15 +37,19 @@
             {{/each}}
         </div>
         <div class="tableRow">
-            {{#each waiterData}}
-            <div class="tableCell"></div>
+            {{#each scheduledDays}}
+            <div class="tableCell">
+                {{#if (eq this.day "Monday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Tuesday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Wednesday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Thursday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Friday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Saturday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Sunday")}}{{this.user_name}}{{/if}}
+            </div>
             {{/each}}
-            {{!-- <div class="tableCell">
-                <div>Devan</div>
-                <div>Sam</div>
-                <div>Beth</div>
-            </div> --}}
         </div>
+        
     </div>
     {{!-- Modal Dialog START--}}
     <div class="overlay hidden">

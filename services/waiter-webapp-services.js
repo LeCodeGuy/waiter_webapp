@@ -70,11 +70,15 @@ export default function queries(db){
     async function getWaiterSchedule(userName){
         const userRecord = await db.oneOrNone("SELECT * FROM Users WHERE User_Name = $1",userName);
         if(userRecord){
-            return await db.any("SELECT * FROM Schedule WHERE FK_Waiter_ID = $1",userRecord.id);
+            return await db.any("SELECT day FROM Schedule AS S JOIN Days AS D ON S.FK_Day_ID=D.ID WHERE S.FK_Waiter_ID = $1",userRecord.id);
         }
         else{
             return 'No user found';
         }
+    }
+
+    async function getSchedule(){
+        return await db.any("SELECT user_name,day FROM Schedule AS S JOIN Days AS D on S.FK_Day_ID=D.ID JOIN Users AS U on S.FK_Waiter_ID=U.ID");
     }
 
     return{
@@ -86,6 +90,7 @@ export default function queries(db){
         addSchedule,
         removeSchedule,
         getWaiterSchedule,
+        getSchedule,
         resetData,
         resetUsers,
     }

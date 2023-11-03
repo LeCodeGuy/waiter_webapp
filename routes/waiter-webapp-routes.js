@@ -4,7 +4,6 @@ export default function waiterApp(query){
     let loggedIn
     const regexVal = /^[A-Za-z|\s|-]+$/;
     let passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-    let daysSelected
 
     //Helper functions
     function titleCase(str) {
@@ -163,12 +162,13 @@ export default function waiterApp(query){
         }
         
     }
-
+    // ! Waiter page load
     async function pageLoad(req,res){
         loggedIn = true;
         let weekData = await query.allDays();
         const user= req.params.username;
         const waiterSchedule = await query.getWaiterSchedule(user);
+        let myArr = [];
         
         if(loggedIn == true){
             if(waiterSchedule == 'No user found'){
@@ -176,14 +176,19 @@ export default function waiterApp(query){
                 res.redirect('/register');
             }
             else{
+
+                //console.log(waiterSchedule);
+                for(let i=0; i<waiterSchedule.length;i++){
+                    myArr.push(waiterSchedule[i].day);
+                }
+
                 res.render('waiters',{
                     // variables to be passed to handlebars
                     tabTitle:'Waiter Scheduling',
                     user,
                     weekData,
-                    waiterSchedule,
+                    waiterSchedule:myArr,
                     loggedIn,
-                    daysSelected,
                 })
             }
         }
@@ -192,7 +197,7 @@ export default function waiterApp(query){
             res.redirect('/');
         }        
     }
-
+    // ! Waiter page update Schedule
     async function scheduling(req, res){
         let selectedDays = req.body.day;
         const userName = req.params.username;
@@ -222,7 +227,7 @@ export default function waiterApp(query){
                 await query.addSchedule(userName,dayRecordsSelection);
                 req.flash('success', 'Schedule updated successfully!');
             }
-            daysSelected = selectedDays;
+            
             res.redirect('/waiters/'+userName);
         }
         else{
@@ -230,18 +235,20 @@ export default function waiterApp(query){
             res.redirect('/waiters/'+userName);
         }        
     }
-
+    // ! Manager page load
     async function getSchedule(req, res){
         loggedIn = true;
 
         if(loggedIn == true){
             let weekData = await query.allDays();
             let staff = await query.allUsers();
+            let scheduledDays = await query.getSchedule();
 
             res.render('manage',{
                 // variables to be passed to handlebars
                 tabTitle:'Manager View',
                 weekData,
+                scheduledDays,
                 staff,
                 user:'Manager',
                 loggedIn,
