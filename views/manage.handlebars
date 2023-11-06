@@ -39,17 +39,16 @@
         <div class="tableRow">
             {{#each scheduledDays}}
             <div class="tableCell">
-                {{#if (eq this.day "Monday")}}{{this.user_name}}{{/if}}
-                {{#if (eq this.day "Tuesday")}}{{this.user_name}}{{/if}}
-                {{#if (eq this.day "Wednesday")}}{{this.user_name}}{{/if}}
-                {{#if (eq this.day "Thursday")}}{{this.user_name}}{{/if}}
-                {{#if (eq this.day "Friday")}}{{this.user_name}}{{/if}}
-                {{#if (eq this.day "Saturday")}}{{this.user_name}}{{/if}}
-                {{#if (eq this.day "Sunday")}}{{this.user_name}}{{/if}}
+                {{#if (eq this.day "Monday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
+                {{#if (eq this.day "Tuesday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
+                {{#if (eq this.day "Wednesday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
+                {{#if (eq this.day "Thursday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
+                {{#if (eq this.day "Friday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
+                {{#if (eq this.day "Saturday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
+                {{#if (eq this.day "Sunday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
             </div>
             {{/each}}
         </div>
-        
     </div>
     {{!-- Modal Dialog START--}}
     <div class="overlay hidden">

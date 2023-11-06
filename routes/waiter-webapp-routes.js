@@ -169,7 +169,7 @@ export default function waiterApp(query){
         const user= req.params.username;
         const waiterSchedule = await query.getWaiterSchedule(user);
         let myArr = [];
-        
+
         if(loggedIn == true){
             if(waiterSchedule == 'No user found'){
                 // redirect to registration screen if user account does not exist
@@ -244,11 +244,22 @@ export default function waiterApp(query){
             let staff = await query.allUsers();
             let scheduledDays = await query.getSchedule();
 
+            const restructuredData = scheduledDays.reduce((acc, curr) => {
+                const existingEntry = acc.find(item => item.day === curr.day);
+                if (existingEntry) {
+                  existingEntry.waiters.push(curr.user_name);
+                } else {
+                  acc.push({ day: curr.day, waiters: [curr.user_name] });
+                }
+                return acc;
+            }, []);
+            
+            console.log(restructuredData);
             res.render('manage',{
                 // variables to be passed to handlebars
                 tabTitle:'Manager View',
                 weekData,
-                scheduledDays,
+                scheduledDays: restructuredData,
                 staff,
                 user:'Manager',
                 loggedIn,

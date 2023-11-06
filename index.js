@@ -48,6 +48,13 @@ const handlebarSetup = exphbs.engine({
     helpers: {
         eq: function (v1, v2) {
             return v1 === v2;
+        },
+        hasWaiters: function (scheduledDays) {
+            return scheduledDays.some(item => item.day === scheduledDays.day);
+        },
+        getWaiters: function (scheduledDays) {
+            const entry = scheduledDays.find(item => item.day === scheduledDays.day);
+            return entry.waiters.join(', ');
         }
     },
     partialsDir: './views/partials',
