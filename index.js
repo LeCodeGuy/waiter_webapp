@@ -49,6 +49,12 @@ const handlebarSetup = exphbs.engine({
         eq: function (v1, v2) {
             return v1 === v2;
         },
+        lte: function (v1, v2) {
+            return v1 <= v2;
+        },
+        gte: function (v1, v2) {
+            return v1 >= v2;
+        },
         hasWaiters: function (scheduledDays) {
             return scheduledDays.some(item => item.day === scheduledDays.day);
         },
@@ -94,6 +100,7 @@ app.post('/waiters/:username', routes.scheduling);
 
 // Management Page
 app.get('/days',routes.getSchedule);
+app.post('/days/manage',routes.addManager);
 app.post('/days',routes.updateSchedule);
 
 // Reset route

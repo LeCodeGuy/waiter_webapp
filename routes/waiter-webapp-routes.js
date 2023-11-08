@@ -243,7 +243,7 @@ export default function waiterApp(query){
             let weekData = await query.allDays();
             let staff = await query.allUsers();
             let scheduledDays = await query.getSchedule();
-
+            
             const restructuredData = scheduledDays.reduce((acc, curr) => {
                 const existingEntry = acc.find(item => item.day === curr.day);
                 if (existingEntry) {
@@ -254,12 +254,34 @@ export default function waiterApp(query){
                 return acc;
             }, []);
             
-            console.log(restructuredData);
+            // Merge datasets
+            const mergedData = weekData.map(dayItem => {
+                // find item where the day properties match
+                const waitersItem = restructuredData.find(function(waiterItem) {
+                                        return waiterItem.day === dayItem.day;
+                                    });
+                // If there is a match add the record to the mergedData array
+                if (waitersItem) {
+                    let waitersCount;
+                    // count the number of items in the waiters array
+                    if (Array.isArray(waitersItem.waiters)) {
+                        waitersCount = waitersItem.waiters.length;
+                    } else {
+                        waitersCount = 0;
+                    }
+
+                    return { day: waitersItem.day, waiters: waitersItem.waiters, count: waitersCount };
+                } else {
+                    // If there is no match add the day and no waiters to have a full data set
+                    return { day: dayItem.day, waiters: 'No Waiters', count: 0 };
+                }
+            });
+            
             res.render('manage',{
                 // variables to be passed to handlebars
                 tabTitle:'Manager View',
                 weekData,
-                scheduledDays: restructuredData,
+                scheduledDays: mergedData,
                 staff,
                 user:'Manager',
                 loggedIn,
@@ -269,9 +291,40 @@ export default function waiterApp(query){
             res.redirect('/');
         }        
     }
+    async function addManager(req,res){
+        const choice = req.body.employees;
+
+        if(choice != 'Select'){
+            await query.addManager(choice);
+        }
+        else{
+            req.flash('error','Invalid manager selection, Please select a name from the dropdown before clicking on Add');
+        }
+        
+        res.redirect('/days');
+    }
 
     async function updateSchedule(req,res){
-
+        const user = req.body.waiters;
+        const currentDay = req.body.dayCurrent;
+        const newDay = req.body.dayNew;
+        const existingRecord = await query.getWaiterDayRecord(user,currentDay);;
+        
+        if(currentDay != newDay){
+            if(existingRecord.length>0){
+                await query.managerUpdateSchedule(user,currentDay,newDay);
+                // console.log(existingRecord);
+                // req.flash('success','Post to DB')
+            }
+            else{
+                req.flash('error',user+' does not currently have '+currentDay+' scheduled! No change made');
+            }
+        }
+        else{
+            req.flash('error','Invalid day selection, the current day and new schedule day cannot be the same');
+        }
+        
+        res.redirect('/days');
     }    
     async function reset(req, res){
         await query.resetData();
@@ -293,6 +346,7 @@ export default function waiterApp(query){
         pageLoad,
         scheduling,
         getSchedule,
+        addManager,
         updateSchedule,
         reset,
         logout,

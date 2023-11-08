@@ -14,7 +14,6 @@ const proceedBtn = document.querySelector('.btnProceed') || null;
 // waiter page variables
 let daysSelected = document.querySelector('.daysSelected') || null;
 let days = document.getElementsByName('day') || null;//document.querySelectorAll('.regNumsTown');
-// console.log(days);
 
 // *Event listeners
 if(loginBtn){
@@ -124,3 +123,18 @@ function setDaysSelected(){
     // remove the placeholder
     daysSelected.remove();
 }
+// If URL contains /days
+if (window.location.href.indexOf('/days') > -1) {
+    // manager page variables
+    let tableCells = document.querySelectorAll('.cellContent') || null;
+
+    // Iterate through each table cell
+    tableCells.forEach(cell => {
+        // Get the innerHTML and split the content at commas
+        const content = cell.innerHTML;
+        const splitContent = content.split(',');
+
+        // Reformat the cell's innerHTML to include the separated values
+        cell.innerHTML = splitContent.map(item => item.trim()).join('<br>');
+    });
+  }

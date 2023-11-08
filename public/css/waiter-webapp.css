@@ -7,26 +7,49 @@ body{
     font-family: 'Nunito',sans-serif;
     color:#003049;
     background-color: #FBFBF2;
-    
 }
+
 body::after {
     content: "";
-    background: url(../images/coffeeBeans.jpg) repeat; /* Source https://unsplash.com/photos/TD4DBagg2wE */
+    background-image: url(../images/coffeeBeans.jpg);/* Source https://unsplash.com/photos/TD4DBagg2wE */
+    background-repeat: repeat;
     opacity: 0.7;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    position: absolute;
-    z-index: -1;   
+    position: fixed;
+    z-index: -1;
   }
+.box{
+  margin: 20px;
+  background-color: #FBFBF2;
+  border: 1px solid #FBFBF2;
+  border-radius: 10px;
+  padding: 10px;
+}
+.manage{
+  display: flex;
+  justify-content: space-around;
+  width:100%;
+}
+.col{
+  display:flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  flex: 1;
+  /* margin: 20px;
+  background-color: #FBFBF2;
+  border: 1px solid #FBFBF2;
+  border-radius: 10px;
+  padding: 10px; */
+}
 
-/* div.container{
-    
-    background-image: url(../images/coffeeBeans.jpg);
-    background-repeat: repeat;
-    opacity: 0.5;
-} */
+.dropDown{
+  margin: 5px auto;
+  width: 15em;
+}
 .login{
     display: flex;
     justify-content: flex-end;
@@ -109,51 +132,47 @@ form{
   border: 1px solid #003049;
   padding:10px;
   text-align: center;
-  width: 10em;
+  min-width: 9.5em;
+  max-width: 9.5em;
+  overflow-wrap: anywhere;
 }
 .heading,.noWaiters{
   font-weight: bold;
 }
+.schedule{
+  width: 100%;
+}
 .info{
   display:flex;
-}
-/* .left-align {
-  width:50%;
-  text-align: left;
-}
-
-.right-align{
-  width:50%;
-  text-align: right;
-} */
-
-.legend{
-  /* display: flex;
+  justify-content: center;
   align-items: center;
-  flex-direction: row; */
-  margin: 10px;
+  flex-direction: column;
 }
+
 .legendItem{
-  /* margin:5px; */
   padding:5px;
-  font-weight: bold;
-  /* border:1px solid #003049; */
 }
 .someWaiters{
  color:#ff7601;
  background:#ffc08a;
+ font-weight: bold;
 }
 
 .enoughWaiters{
   color:#228b22;
   background: #a3f3a3;
+  font-weight: bold;
 }
 
 .tooManyWaiters{
   color:#cc0f35;
   background: #fbcad3;
+  font-weight: bold;
 }
 /* *Flash message styling */
+.message {
+  margin-bottom: 10px !important;
+}
 .msgError {
   color:#cc0f35;
   font-weight:bold;

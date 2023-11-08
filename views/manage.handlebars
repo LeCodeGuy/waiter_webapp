@@ -1,16 +1,109 @@
 <div class="bodyContent">
-    <h1 class="mainHeading">Manage waiter schedules</h1>
-    <section class="info">
-        
-        <div class="legend">
-            <h2>Legend</h2>
-            <div class="legendItem noWaiters">No waiters</div>
-            <div class="legendItem someWaiters">Less than 3 waiters for the day</div>
-            <div class="legendItem enoughWaiters">3 waiters for the day</div>
-            <div class="legendItem tooManyWaiters">More than 3 waiters for the day</div>
-        </div>
+    <h1 class="mainHeading">Manage Waiter Schedules</h1>
+    <section class="schedule">
+        <div class="info box">
+            {{#if messages.success}}
+            <div class="message msgSuccess">{{messages.success}}</div>
+            {{/if}}
+            {{#if messages.error}}
+            <div class="message msgError">{{messages.error}}</div>
+            {{/if}}
+            <div class="legend">
+                <h2>Legend</h2>
+                <div class="legendItem noWaiters">No waiters</div>
+                <div class="legendItem someWaiters">Less than 3 waiters for the day</div>
+                <div class="legendItem enoughWaiters">3 waiters for the day</div>
+                <div class="legendItem tooManyWaiters">More than 3 waiters for the day</div>
+            </div>
 
-        <div class="employees ">
+            <h2>This Week's Schedule</h2> 
+            {{#if messages.resetSuccess}}
+            <div class="message msgSuccess">{{messages.resetSuccess}}</div>
+            {{/if}}
+            <div class="table">
+                <div class="tableRow">
+                    {{#each weekData}}
+                    <div class="tableCell heading">{{this.day}}</div>
+                    {{/each}}
+                </div>
+                <div class="tableRow">
+                    {{#each scheduledDays}}
+                    <div class="tableCell cellContent
+                        {{#if (eq this.day "Monday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Tuesday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Wednesday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Thursday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Friday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Saturday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Sunday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}">
+                        {{this.waiters}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            {{!-- Modal Dialog START--}}
+            <div class="overlay hidden">
+                <section class="modal hidden">
+                    <div>
+                        <h3>Warning!</h3>
+                        <p>You are about to reset the app!</p>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btnProceed">Proceed</button>
+                        <button type="button" class="btn btn-close">Close</button>
+                    </div>
+                </section>
+            </div>
+            {{!-- Modal Dialog END --}}
+            <input type="button" value="Reset" class="btn btn-open">
+        </div>
+    </section>
+    <section class="manage">
+        {{!-- My Employees --}}
+        <div class="employees box col">
             <h2>My Employees</h2>
             <div class="table staff">
                 <div class="tableRow">
@@ -25,44 +118,46 @@
                 {{/each}}          
             </div>
         </div>
-    </section>      
-    <h2>This Week's Schedule</h2> 
-    {{#if messages.resetSuccess}}
-    <div class="message msgSuccess">{{messages.resetSuccess}}</div>
-    {{/if}}   
-    <div class="table schedule">
-        <div class="tableRow">
-            {{#each weekData}}
-            <div class="tableCell heading">{{this.day}}</div>
+        
+        {{!-- Add Manager --}}
+        <form class="box col" action="days/manage" method="post">
+        <h2>Add Manager</h2>
+        <select name="employees" class="dropDown" id="employees">
+            <option value='Select'>Make Selection</option>
+            {{#each staff}}
+            {{#if (eq this.user_role 'Waiter')}}
+            <option value="{{this.user_name}}">{{this.user_name}}</option>
+            {{/if}}
             {{/each}}
-        </div>
-        <div class="tableRow">
-            {{#each scheduledDays}}
-            <div class="tableCell">
-                {{#if (eq this.day "Monday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-                {{#if (eq this.day "Tuesday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-                {{#if (eq this.day "Wednesday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-                {{#if (eq this.day "Thursday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-                {{#if (eq this.day "Friday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-                {{#if (eq this.day "Saturday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-                {{#if (eq this.day "Sunday")}}{{this.waiters}}{{else}}No Waiters{{/if}}
-            </div>
-            {{/each}}
-        </div>
-    </div>
-    {{!-- Modal Dialog START--}}
-    <div class="overlay hidden">
-        <section class="modal hidden">
-            <div>
-                <h3>Warning!</h3>
-                <p>You are about to reset the app!</p>
-            </div>
-            <div class="modal-buttons">
-                <button type="button" class="btn btnProceed">Proceed</button>
-                <button type="button" class="btn btn-close">Close</button>
-            </div>
-        </section>
-    </div>
-    {{!-- Modal Dialog END --}}
-    <input type="button" value="Reset" class="btn btn-open">
+        </select>
+        <input type="submit" value="Add" class="btn show">
+        </form>
+        
+        {{!-- update schedule --}}
+        <form class="box col" action="days" method="post">
+            <h2>Update Schedule</h2>
+            <select name="waiters" class="dropDown" id="waiters">
+                <option value='Select'>Choose Employee</option>
+                {{#each staff}}
+                {{#if (eq this.user_role 'Waiter')}}
+                <option value="{{this.user_name}}">{{this.user_name}}</option>
+                {{/if}}
+                {{/each}}
+            </select>
+            <select name="dayCurrent" class="dropDown" id="dayCurrent">
+                <option value='Select'>Current Day</option>
+                {{#each weekData}}
+                <option value="{{this.day}}">{{this.day}}</option>
+                {{/each}}
+            </select>
+            <select name="dayNew" class="dropDown" id="dayNew">
+                <option value='Select'>New Day</option>
+                {{#each weekData}}
+                <option value="{{this.day}}">{{this.day}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Update" class="btn show">
+        </form>
+    </section>
 </div>
+
