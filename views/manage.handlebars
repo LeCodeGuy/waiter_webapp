@@ -139,9 +139,7 @@
             <select name="waiters" class="dropDown" id="waiters">
                 <option value='Select'>Choose Employee</option>
                 {{#each staff}}
-                {{#if (eq this.user_role 'Waiter')}}
                 <option value="{{this.user_name}}">{{this.user_name}}</option>
-                {{/if}}
                 {{/each}}
             </select>
             <select name="dayCurrent" class="dropDown" id="dayCurrent">

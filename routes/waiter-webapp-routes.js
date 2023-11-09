@@ -298,6 +298,7 @@ export default function waiterApp(query){
             res.redirect('/');
         }        
     }
+
     async function addManager(req,res){
         const choice = req.body.employees;
 
@@ -320,8 +321,6 @@ export default function waiterApp(query){
         if(currentDay != newDay){
             if(existingRecord.length>0){
                 await query.managerUpdateSchedule(user,currentDay,newDay);
-                // console.log(existingRecord);
-                // req.flash('success','Post to DB')
             }
             else{
                 req.flash('error',user+' does not currently have '+currentDay+' scheduled! No change made');
