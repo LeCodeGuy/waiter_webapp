@@ -112,41 +112,48 @@ export default function waiterApp(query){
                 
                 // Get user record
                 const userRecord = await query.checkUser(user);
-                
-                if(userRecord[0].user_role == role){
-                    if(pass){                    
-                    
-                        // Compare the hashed password with the password entered by the user
-                        const isPasswordMatch = bcrypt.compareSync(pass, userRecord[0].user_password);
+
+                if(userRecord.length>0){
+                    if(userRecord[0].user_role == role){
+                        if(pass){                    
+                        
+                            // Compare the hashed password with the password entered by the user
+                            const isPasswordMatch = bcrypt.compareSync(pass, userRecord[0].user_password);
+            
+                            if (isPasswordMatch || pass==userRecord[0].user_password) {
+                                // Passwords match
+                                //console.log("Passwords match. User authentication successful.");
+                                
         
-                        if (isPasswordMatch || pass==userRecord[0].user_password) {
-                            // Passwords match
-                            //console.log("Passwords match. User authentication successful.");
-                            
-    
-                            if(role == 'Waiter' && userRecord[0].user_role == role){
-                                loggedIn = true;
-                                res.redirect('/waiters/'+user);
+                                if(role == 'Waiter' && userRecord[0].user_role == role){
+                                    loggedIn = true;
+                                    res.redirect('/waiters/'+user);
+                                }
+                                else if(role == 'Admin'){
+                                    loggedIn = true;
+                                    res.redirect('/days');
+                                }
+                            } else {
+                                // Passwords do not match
+                                req.flash('loginError', 'The password does not match.');    
+                                res.redirect('/login');
                             }
-                            else if(role == 'Admin'){
-                                loggedIn = true;
-                                res.redirect('/days');
-                            }
-                        } else {
-                            // Passwords do not match
-                            req.flash('loginError', 'The password does not match.');    
+                        }
+                        else{
+                            //No password provided
+                            req.flash('loginError', 'Please enter your password');
                             res.redirect('/login');
                         }
                     }
                     else{
-                        //No password provided
-                        req.flash('loginError', 'Please enter your password');
+                        // Roles do not match
+                        req.flash('loginError', 'Invalid user role, please select a different role');    
                         res.redirect('/login');
                     }
                 }
                 else{
-                    // Roles do not match
-                    req.flash('loginError', 'Invalid user role, please select a different role');    
+                    // User not found
+                    req.flash('loginError', 'The username, '+user+', was not found');    
                     res.redirect('/login');
                 }
             }
