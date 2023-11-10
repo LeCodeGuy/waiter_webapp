@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap');
 
 /* *General Styling */
-
 body{
     font-family: 'Nunito',sans-serif;
     color:#003049;
@@ -20,49 +19,6 @@ body::after {
     right: 0;
     position: fixed;
     z-index: -1;
-  }
-.box{
-  margin: 20px;
-  background-color: #FBFBF2;
-  border: 1px solid #FBFBF2;
-  border-radius: 10px;
-  padding: 10px;
-}
-.manage{
-  display: flex;
-  justify-content: space-around;
-  width:100%;
-}
-.col{
-  display:flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  flex: 1;
-  /* margin: 20px;
-  background-color: #FBFBF2;
-  border: 1px solid #FBFBF2;
-  border-radius: 10px;
-  padding: 10px; */
-}
-
-.dropDown{
-  margin: 5px auto;
-  width: 15em;
-}
-.login{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px;
-    color: #003049;
-    background:#cbdfbd;
-    /* width: calc(100vw - 20px);
-    margin-left: calc(-50vw + 50% + 10px); */
-}
-
-.icon {
-    padding:5px;
 }
 
 .bodyContent {
@@ -74,14 +30,48 @@ body::after {
   /* style the form */
   background-color: #cbdfbd;
   border-radius: 5px;
-  width: 70%;
+  width: 100%;
   margin: 5% auto;
 }
+.box{
+  margin: 20px;
+  background-color: #FBFBF2;
+  border: 1px solid #FBFBF2;
+  border-radius: 10px;
+  padding: 10px;
+}
 
-.mainHeading {
-  font-size: 65px;
-  margin: 30px auto;
+.manage{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width:100%;
+}
+
+.col{
+  display:flex;
+  flex-direction: column;
   text-align: center;
+  align-items: center;
+  flex: 1;
+}
+
+.dropDown{
+  margin: 5px auto;
+  width: 15em;
+}
+
+.login{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    color: #003049;
+    background:#cbdfbd;
+}
+
+.icon {
+    padding:5px;
 }
 
 .homeBtns{
@@ -89,12 +79,6 @@ body::after {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
-
-form{
-    width: 100%;
-    padding: 10px 0px;
-    text-align: center;   
 }
 
 .btn {
@@ -108,6 +92,7 @@ form{
   padding:5px;
   width:110px;
 }
+
 .clearStyle{
   all: unset;
 }
@@ -123,6 +108,10 @@ form{
   margin: 0 auto;
 }
 
+/* .table-responsive {
+  overflow-x: auto;
+} */
+
 .tableRow{
   display: table-row;
 }
@@ -136,12 +125,15 @@ form{
   max-width: 9.5em;
   overflow-wrap: anywhere;
 }
-.heading,.noWaiters{
+
+.heading{
   font-weight: bold;
 }
+
 .schedule{
   width: 100%;
 }
+
 .info{
   display:flex;
   justify-content: center;
@@ -152,6 +144,12 @@ form{
 .legendItem{
   padding:5px;
 }
+
+.noWaiters{
+ background:#e8e8e8;
+ font-weight: bold;
+}
+
 .someWaiters{
  color:#ff7601;
  background:#ffc08a;
@@ -169,10 +167,12 @@ form{
   background: #fbcad3;
   font-weight: bold;
 }
+
 /* *Flash message styling */
 .message {
   margin-bottom: 10px !important;
 }
+
 .msgError {
   color:#cc0f35;
   font-weight:bold;
@@ -183,6 +183,7 @@ form{
   text-align: center;
   width: 90%;
 }
+
 .msgSuccess {
 color:#228b22;
 font-weight:bold;
@@ -212,9 +213,7 @@ width: 90%;
   flex-direction: column;
   justify-content: center;
   text-align:center;
-  width: 450px;
-  padding: 1.3rem;
-  min-height: 250px;
+  /* padding: 1.3rem; */
   position: absolute;
   top: 50%;                           /* Moves the form down 50% */
   left: 50%;                          /* Moves the form left 50% */
@@ -246,4 +245,238 @@ width: 90%;
 
 .hidden {
   display: none;
+}
+.scheduleContainer{
+  display: flex;
+  width:100%;
+  justify-content: space-evenly;
+  flex-wrap:wrap;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:10em;
+  height:10em;
+  margin:10px auto;
+  border: 1px solid #003049;
+  border-radius: 10px;
+}
+
+.panelHeading{
+  text-align: center;
+  font-weight: bold;
+  width:100%;
+  padding: 10px 0px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.panelBody{
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 0px 10px 10px;
+  flex: 1;
+}
+.days{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.day{
+  margin: 0px 5px;
+  flex-direction:row;
+  justify-content: center;
+  width: 8em;
+  height:2em;
+}
+.btnSchedule{
+  margin:10px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+/* *Media Queries */
+/* Mobile small screens*/
+@media only screen and (max-width:575px){/*(max-width:374px){*/
+  body{
+    font-size: small;
+  }
+
+  nav.login{
+    padding: 2px;
+  }
+  .icon{
+    padding: 2px;
+  }
+  svg{
+    width:15px;
+    height:15px;
+    fill: currentcolor;
+  }
+
+  select{
+    font-size: smaller;
+  }
+  
+  .passExample{
+    text-align: left;
+  }
+
+  .regForm input{
+    margin:2px;
+    font-size: smaller;
+  }
+  
+  .btn{
+    margin: 2px 2px;
+    padding: 2px;
+    width: 60px;
+    font-size: small;
+  }
+  
+  .bodyContent {
+    margin: 2% auto;
+  }
+
+  h1{
+    font-size: 20px;
+    margin: 5px auto;
+    text-align: center;
+  }
+  h2{
+    font-size:16px;
+    margin:5px auto;
+  }
+  
+  .box{
+    margin:5px;
+  }
+  
+  .legendItem{
+    padding:2px;
+  }
+
+  .day{
+    margin:5px 5px !important;
+    height:2em !important;
+    text-align: center;
+  }
+
+  .btnSchedule{
+    margin:5px auto;
+  }
+  .panel {
+    height:10em;
+    margin:5px 2px;
+  }
+
+  .tableCell {
+    border: 1px solid #003049;
+    padding: 5px;
+    min-width: 6em;
+  }
+
+  form{
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+  }
+
+  .dropDown{
+    font-size: smaller;
+    width:12em;
+    margin:2px auto;
+  }
+  .modal {
+    width: 250px;
+    min-height: 200px;
+  }
+}
+
+/* Medium screens (tablets and small laptops) */
+@media only screen and (min-width: 576px) and (max-width: 1024px) {
+  nav.login{
+    padding: 5px;
+  }
+  .icon{
+    padding: 5px;
+  }
+  svg{
+    width:20px;
+    height:20px;
+    fill: currentcolor;
+  }
+  
+  .btn{
+    width: 80px;
+  }
+  
+  .bodyContent {
+    margin: 4% auto;
+  }
+
+  h1{
+    font-size: 30px;
+    margin: 10px auto;
+    text-align: center;
+  }
+  h2{
+    margin:10px auto;
+  }
+
+  .day{
+    margin:5px 5px !important;
+    height:2em !important;
+    text-align: center;
+  }
+
+  
+  .panel {
+    height:10em;
+    margin: 5px auto;
+  }
+
+  .tableCell {
+    border: 1px solid #003049;
+    padding: 5px;
+    min-width: 6em;
+  }
+
+  form{
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+  }
+
+  .dropDown{
+    font-size: smaller;
+    width:12em;
+    margin:5px auto;
+  }
+
+  .modal {
+    width: 350px;
+    padding: 1em;
+    min-height: 225px;
+  }
+}
+
+/* Large screens (large desktops and high-resolution displays) */
+@media only screen and (min-width: 1025px) {
+    .mainHeading {
+    font-size: 65px;
+    margin: 30px auto;
+    text-align: center;
+  }
+
+  .modal {
+    width: 450px;
+    padding: 1.3rem;
+    min-height: 250px;
+    
+  }
 }

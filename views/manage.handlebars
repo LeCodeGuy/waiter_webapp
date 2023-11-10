@@ -20,7 +20,69 @@
             {{#if messages.resetSuccess}}
             <div class="message msgSuccess">{{messages.resetSuccess}}</div>
             {{/if}}
-            <div class="table">
+
+            <div class="scheduleContainer">
+                {{#each scheduledDays}}
+                <div class="panel">
+                    <div class="panelHeading">
+                        {{this.day}}
+                    </div>
+                    <div class="panelBody cellContent {{#if (eq this.day "Monday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Tuesday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Wednesday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Thursday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Friday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Saturday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}
+                        {{#if (eq this.day "Sunday")}}
+                            {{#if (eq this.count 0)}} noWaiters
+                            {{else if (eq this.count 3)}} enoughWaiters
+                            {{else if (lte this.count 2)}} someWaiters
+                            {{else if (gte this.count 4)}} tooManyWaiters
+                            {{/if}}
+                        {{/if}}">
+                        {{this.waiters}}
+                    </div>
+                </div>
+                {{/each}}
+            </div> 
+
+            {{!-- <div class="table">
                 <div class="tableRow">
                     {{#each weekData}}
                     <div class="tableCell heading">{{this.day}}</div>
@@ -82,7 +144,7 @@
                     </div>
                     {{/each}}
                 </div>
-            </div>
+            </div> --}}
 
             {{!-- Modal Dialog START--}}
             <div class="overlay hidden">
@@ -102,6 +164,30 @@
         </div>
     </section>
     <section class="manage">
+        {{!-- update schedule --}}
+        <form class="box col" action="days" method="post">
+            <h2>Update Schedule</h2>
+            <select name="waiters" class="dropDown" id="waiters">
+                <option value='Select'>Choose Employee</option>
+                {{#each staff}}
+                <option value="{{this.user_name}}">{{this.user_name}}</option>
+                {{/each}}
+            </select>
+            <select name="dayCurrent" class="dropDown" id="dayCurrent">
+                <option value='Select'>Current Day</option>
+                {{#each weekData}}
+                <option value="{{this.day}}">{{this.day}}</option>
+                {{/each}}
+            </select>
+            <select name="dayNew" class="dropDown" id="dayNew">
+                <option value='Select'>New Day</option>
+                {{#each weekData}}
+                <option value="{{this.day}}">{{this.day}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Update" class="btn show">
+        </form>
+        
         {{!-- My Employees --}}
         <div class="employees box col">
             <h2>My Employees</h2>
@@ -131,30 +217,6 @@
             {{/each}}
         </select>
         <input type="submit" value="Add" class="btn show">
-        </form>
-        
-        {{!-- update schedule --}}
-        <form class="box col" action="days" method="post">
-            <h2>Update Schedule</h2>
-            <select name="waiters" class="dropDown" id="waiters">
-                <option value='Select'>Choose Employee</option>
-                {{#each staff}}
-                <option value="{{this.user_name}}">{{this.user_name}}</option>
-                {{/each}}
-            </select>
-            <select name="dayCurrent" class="dropDown" id="dayCurrent">
-                <option value='Select'>Current Day</option>
-                {{#each weekData}}
-                <option value="{{this.day}}">{{this.day}}</option>
-                {{/each}}
-            </select>
-            <select name="dayNew" class="dropDown" id="dayNew">
-                <option value='Select'>New Day</option>
-                {{#each weekData}}
-                <option value="{{this.day}}">{{this.day}}</option>
-                {{/each}}
-            </select>
-            <input type="submit" value="Update" class="btn show">
         </form>
     </section>
 </div>

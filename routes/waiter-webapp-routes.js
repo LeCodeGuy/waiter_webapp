@@ -27,6 +27,7 @@ export default function waiterApp(query){
     }
 
     async function home(req,res){
+        loggedIn = false;
         res.render('home',{
             tabTitle:'Home - Scheduling App',
             pageTitle:'Welcome to the waiter scheduling app',

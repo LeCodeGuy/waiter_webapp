@@ -7,13 +7,16 @@
         {{#if messages.error}}
             <div class="message msgError">{{messages.error}}</div>
         {{/if}}
-        
-        {{#each weekData}}
-            <input type="checkbox" id="{{this.id}}" name="day" value="{{this.day}}">
-            <label for="{{this.id}}">{{this.day}}</label>
-        {{/each}}
+        <div class="days box">
+            {{#each weekData}}
+            <div class="day panel">
+                <label for="{{this.id}}">{{this.day}}</label>
+                <input type="checkbox" id="{{this.id}}" name="day" value="{{this.day}}">
+            </div>         
+            {{/each}}
+        </div>
 
-        <input type="submit" value="Schedule" class="btn">
+        <input type="submit" value="Schedule" class="btn btnSchedule">
         {{#if messages.success}}
             <div class="message msgSuccess">{{messages.success}}</div>
         {{/if}}
